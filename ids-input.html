@@ -1,0 +1,84 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="ids-input">
+  <template>
+    <style>
+      :host {
+        display: block;
+
+      }
+      
+    </style>
+    <label>[[textLabel]]
+    <input type="[[typeInput]]" id="[[idInput]]"  >
+    <div></div>
+    </label>
+  </template>
+
+  <script>
+  class idsInput extends Polymer.Element {
+      static get is() { return 'ids-input'; }
+      static get properties() {
+        return {
+          typeInput: {
+            type: String,
+            value: 'text'
+          },
+          idInput:{
+          type:String,
+          value:'miId'
+          },
+          textLabel:{
+            type:String,
+            value:'Text label:'
+          }
+         
+        };
+      }
+
+constructor () {
+super();  }
+
+
+ready(){
+super.ready();
+        let writeInput = this.shadowRoot.querySelector('input');
+    
+        writeInput.addEventListener('keyup',(event)=>{
+        
+      let nuevoCustomEvent = new CustomEvent('eventInput',{detail:{id:writeInput.id,value:writeInput.value} ,bubbles:true,composed:true});
+        this.dispatchEvent(nuevoCustomEvent);
+        //console.log(writeInput);
+       // console.log(writeInput.value);
+       validar(writeInput.type,writeInput.value);
+    });
+  }
+  }
+ 
+    window.customElements.define(idsInput.is, idsInput);
+
+//escucha el evento dentro de todo el documento (body)
+document.body.addEventListener('eventInput',function(e){
+  console.log(e);
+});
+
+ function validarSiNumero(numero){
+    if (!/^([0-9])*$/.test(numero))
+      alert("El valor " + numero + " no es un número");
+  }
+  
+let validar =(type,value)=>{
+//alert(type);
+if (type==='text') {
+   if(value.isNaN){
+    alert('nnum');
+   return value;
+   }
+}
+ };
+  </script>
+</dom-module>
+
+
+
+   

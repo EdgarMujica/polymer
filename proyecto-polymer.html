@@ -1,0 +1,75 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="ids-button">
+  <template>
+    <style>
+      :host {
+        display: block;
+
+      }
+      button{
+        padding: 10px;
+        color: white;
+        background-color: var(--ids-button-bg, green);
+      }
+    </style>
+    <button >
+      <slot></slot>
+    </button>
+  </template>
+
+  <script>
+
+
+    /**
+     * `proyecto-polymer`
+     * componentes web
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class ProyectoPolymer extends Polymer.Element {
+      static get is() { return 'ids-button'; }
+      static get properties() {
+        return {
+          typeAction: {
+            type: String,
+            value: 'Guardar'
+          },
+           theme: {
+            type: String,
+            value: 'default'
+          }
+        };
+      }
+
+constructor () {
+
+    super();  
+  }
+  ready(){
+super.ready();
+        let selectBoton = this.typeAction;
+    this.addEventListener('click',(event)=>{
+        
+        let nuevoCustomEvent = new CustomEvent ('eventoBoton',{detail: this.typeAction, bubbles:true,
+  composed:true});
+        this.dispatchEvent(nuevoCustomEvent);
+        console.log(selectBoton);
+
+    
+
+    });
+  }
+
+  }
+
+    window.customElements.define(ProyectoPolymer.is, ProyectoPolymer);
+
+//escucha el evento dentro de todo el documento (body)
+document.body.addEventListener('eventoBoton',function(e){
+  console.log(e);
+});
+  </script>
+</dom-module>

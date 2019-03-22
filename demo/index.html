@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>proyecto-polymer demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../proyecto-polymer.html">
+    <link rel="import" href="../ids-input.html">
+    <link rel="import" href="../css/buttonThemes.html">
+
+    
+  </head>
+  <body>
+    <div class="vertical-section-container centered">
+      <h3>Basic proyecto-polymer demo</h3>
+      <demo-snippet>
+        <template>
+          <ids-button >Guardar usuario</ids-button>
+          <ids-button theme="btn-edit" type-action="Editar">Editar</ids-button>
+           <ids-button theme="btn-delete" type-action="Editar">Eliminar</ids-button>
+          
+          <ids-input id-input="otroID" pattern="plátano|cereza"></ids-input>
+           <ids-input type-input="date" id-input="fecha"></ids-input>
+           <div id="divDatos"></div>
+          <form>
+  <label for="choose">¿Preferirías un plátano o una cereza?</label>
+  <input id="choose" name="i_like" pattern="plátano|cereza">
+  <span id="mensaje"></span>
+  <button>Enviar</button>
+</form>
+
+          <style type="text/css">
+            input:invalid {
+  border: 2px solid red;
+  #mensaje::before {
+  content: "Name: ";
+}
+}
+
+input:valid {
+  border: 2px solid yellow;
+}
+          </style>
+
+          <script type="text/javascript">
+          let obj = {};
+          let divDatos = document.getElementById('divDatos');
+          document.addEventListener('eventInput',(e)=>{
+            obj[e.detail.id]=e.detail.value;
+            let parse = JSON.stringify(obj);
+            console.log(parse);
+            divDatos.innerHTML = parse;
+          });
+          </script> 
+        </template>
+      </demo-snippet>
+    </div>
+  </body>
+</html>
