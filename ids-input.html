@@ -7,16 +7,16 @@
         display: block;
 
       }
-      
+
     </style>
     <label>[[textLabel]]
-    <input type="[[typeInput]]" id="[[idInput]]"  >
-    <div></div>
+      <input type="[[typeInput]]" id="[[idInput]]" pattern="{{patternInput}}"  >
+      <span>{{error}}</span>
     </label>
   </template>
 
   <script>
-  class idsInput extends Polymer.Element {
+    class idsInput extends Polymer.Element {
       static get is() { return 'ids-input'; }
       static get properties() {
         return {
@@ -25,60 +25,58 @@
             value: 'text'
           },
           idInput:{
-          type:String,
-          value:'miId'
+            type:String,
+            value:'miId'
           },
           textLabel:{
             type:String,
             value:'Text label:'
+          },
+          error:{
+            type:String,
+            reflectToAttribute:true//identifica el cambio del elemento
+          },
+          patternInput:{
+            type:String
           }
-         
         };
       }
 
-constructor () {
-super();  }
+      constructor () {
+        super();  
+      }
 
 
-ready(){
-super.ready();
-        let writeInput = this.shadowRoot.querySelector('input');
-    
-        writeInput.addEventListener('keyup',(event)=>{
-        
-      let nuevoCustomEvent = new CustomEvent('eventInput',{detail:{id:writeInput.id,value:writeInput.value} ,bubbles:true,composed:true});
-        this.dispatchEvent(nuevoCustomEvent);
-        //console.log(writeInput);
-       // console.log(writeInput.value);
-       validar(writeInput.type,writeInput.value);
-    });
-  }
-  }
- 
-    window.customElements.define(idsInput.is, idsInput);
+        ready(){
+          super.ready();
+          let writeInput = this.shadowRoot.querySelector('input');
+
+          writeInput.addEventListener('change',(event)=>{
+
+            let nuevoCustomEvent = new CustomEvent('eventInput',{detail:{id:writeInput.id,value:writeInput.value} ,bubbles:true,composed:true});
+            this.dispatchEvent(nuevoCustomEvent);
+            if (writeInput.checkValidity()) {
+              this.error ="";
+            }else{
+              this.error="mal";
+            }
+//console.log(writeInput);
+// console.log(writeInput.value);
+
+});
+        }
+      }
+
+      window.customElements.define(idsInput.is, idsInput);
 
 //escucha el evento dentro de todo el documento (body)
 document.body.addEventListener('eventInput',function(e){
   console.log(e);
 });
 
- function validarSiNumero(numero){
-    if (!/^([0-9])*$/.test(numero))
-      alert("El valor " + numero + " no es un número");
-  }
-  
-let validar =(type,value)=>{
-//alert(type);
-if (type==='text') {
-   if(value.isNaN){
-    alert('nnum');
-   return value;
-   }
-}
- };
-  </script>
+
+</script>
 </dom-module>
 
 
 
-   

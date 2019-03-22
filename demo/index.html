@@ -25,28 +25,10 @@
           <ids-button theme="btn-edit" type-action="Editar">Editar</ids-button>
            <ids-button theme="btn-delete" type-action="Editar">Eliminar</ids-button>
           
-          <ids-input id-input="otroID" pattern="plátano|cereza"></ids-input>
+          <ids-input id-input="otroID" pattern-input="[0-9]{3,5}"></ids-input>
            <ids-input type-input="date" id-input="fecha"></ids-input>
            <div id="divDatos"></div>
-          <form>
-  <label for="choose">¿Preferirías un plátano o una cereza?</label>
-  <input id="choose" name="i_like" pattern="plátano|cereza">
-  <span id="mensaje"></span>
-  <button>Enviar</button>
-</form>
-
-          <style type="text/css">
-            input:invalid {
-  border: 2px solid red;
-  #mensaje::before {
-  content: "Name: ";
-}
-}
-
-input:valid {
-  border: 2px solid yellow;
-}
-          </style>
+          
 
           <script type="text/javascript">
           let obj = {};
